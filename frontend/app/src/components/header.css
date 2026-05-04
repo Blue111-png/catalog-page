@@ -57,3 +57,18 @@
 .header__nav a.active {
   color: #1a1612;
 }
+.header__logout {
+  background: none;
+  border: none;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9c8b7a;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.header__logout:hover {
+  color: #a32d2d;
+}

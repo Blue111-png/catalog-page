@@ -1,4 +1,5 @@
 require("dotenv").config();
+const authRoutes = require('./routes/auth');
 const express = require("express");
 const cors = require("cors");
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "NK-Aroma API is running 🌿" });

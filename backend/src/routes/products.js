@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const prisma = require("../lib/prisma");
 const cloudinary = require("../lib/cloudinary");
+const authMiddleware = require('../middleware/Auth');
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -28,7 +29,7 @@ router.get("/:slug", async (req, res) => {
 });
 
 // POST create product with image
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
   const { name, description, price, slug, categoryId, inStock } = req.body;
 
   let imageData = null;
@@ -63,7 +64,7 @@ router.post("/", upload.single("image"), async (req, res) => {
 });
 
 // DELETE product
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   const product = await prisma.product.findUnique({
     where: { id: parseInt(req.params.id) },
     include: { images: true },
@@ -78,6 +79,47 @@ router.delete("/:id", async (req, res) => {
 
   await prisma.product.delete({ where: { id: parseInt(req.params.id) } });
   res.json({ message: "Product deleted" });
+});
+
+// PUT update product
+router.put('/:id', authMiddleware, upload.single('image'), async (req, res) => {
+  const { name, description, price, slug, categoryId, inStock } = req.body;
+  const productId = parseInt(req.params.id);
+
+  let imageData = null;
+
+  if (req.file) {
+    const result = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream({ folder: 'nk-aroma' }, (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        })
+        .end(req.file.buffer);
+    });
+
+    imageData = { url: result.secure_url, publicId: result.public_id, isPrimary: true };
+  }
+
+  const product = await prisma.product.update({
+    where: { id: productId },
+    data: {
+      name,
+      description,
+      price: parseFloat(price),
+      slug,
+      inStock: inStock === 'true',
+      categoryId: categoryId ? parseInt(categoryId) : null,
+      ...(imageData && {
+        images: {
+          create: imageData,
+        },
+      }),
+    },
+    include: { images: true, category: true },
+  });
+
+  res.json(product);
 });
 
 module.exports = router;
