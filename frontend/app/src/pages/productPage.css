@@ -311,6 +311,26 @@
   opacity: 0.7;
 }
 
+.product-page__whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.product-page__whatsapp:hover {
+  background: #1ebe5d;
+}
+
 @media (max-width: 768px) {
   .product-page__layout {
     grid-template-columns: 1fr;

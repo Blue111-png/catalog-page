@@ -61,6 +61,15 @@ const handleEditClick = () => {
   });
 };
 
+const handleWhatsApp = () => {
+  if(!product) return;
+  const number = import.meta.env.VITE_WHATSAPP_NUMBER;
+  const primaryImage = product.images.find(img => img.isPrimary) || product.images[0];
+  const message = `Hi! I'm interested in *${product.name}* priced at *$${product.price.toFixed(2)}*.${primaryImage ? `\n${primaryImage.url}` : ''}`;
+  const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank');
+};
+
   if (loading) return <div className="product-page__loading">Loading...</div>;
   if (!product) return <div className="product-page__loading">Product not found.</div>;
 
@@ -152,6 +161,11 @@ const handleEditClick = () => {
               {product.description && (
                 <p className="product-page__description">{product.description}</p>
               )}
+
+<button className="product-page__whatsapp" onClick={handleWhatsApp}>
+  💬 Enquire on WhatsApp
+</button>
+
               {localStorage.getItem('token') && (
                 <div className="product-page__admin-actions">
                   <button className="product-page__edit" onClick={handleEditClick}>Edit Product</button>
