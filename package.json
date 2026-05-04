@@ -1,0 +1,23 @@
+{
+  "name": "nk-aroma",
+  "version": "1.0.0",
+  "description": "A full‑stack catalog application built with **React (frontend)**, **Express (backend)**, and **PostgreSQL (database)**.  \r Features:\r - Display products in a professional catalog layout\r - Upload new products with images\r - Manage product details dynamically",
+  "main": "index.js",
+ "scripts": {
+  "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend/app && npm run dev\""
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blue111-png/catalog-page.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Blue111-png/catalog-page/issues"
+  },
+  "homepage": "https://github.com/Blue111-png/catalog-page#readme",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

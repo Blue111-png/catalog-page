@@ -1,5 +1,6 @@
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -7,11 +8,32 @@ generator client {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
   description String?
   price       Float
-  category    String?
-  imageUrl    String?
-  createdAt   DateTime @default(now())
+  slug        String    @unique
+  inStock     Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  categoryId  Int?
+  category    Category? @relation(fields: [categoryId], references: [id])
+  images      Image[]
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  slug     String    @unique
+  products Product[]
+}
+
+model Image {
+  id          Int     @id @default(autoincrement())
+  url         String         // Cloudinary URL
+  publicId    String         // Cloudinary public_id (needed for deletion)
+  isPrimary   Boolean @default(false)
+  productId   Int
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
