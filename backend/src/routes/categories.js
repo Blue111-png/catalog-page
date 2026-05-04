@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const prisma = require("../lib/prisma");
+const authMiddleware = require('../middleware/auth');
 
 // GET all categories
 router.get("/", async (req, res) => {
@@ -17,6 +18,14 @@ router.post("/", async (req, res) => {
     data: { name, slug },
   });
   res.status(201).json(category);
+});
+
+// DELETE category
+router.delete('/:id', authMiddleware, async (req, res) => {
+  await prisma.category.delete({
+    where: { id: parseInt(req.params.id) },
+  });
+  res.json({ message: 'Category deleted' });
 });
 
 module.exports = router;

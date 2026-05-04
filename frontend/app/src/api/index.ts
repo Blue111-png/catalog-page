@@ -5,6 +5,14 @@ const api = axios.create({
   baseURL: 'http://localhost:5000/api',
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export const getProducts = (category?: string): Promise<Product[]> =>
   api.get('/products', { params: category ? { category } : {} }).then(r => r.data);
 
@@ -24,3 +32,11 @@ export const getCategories = (): Promise<Category[]> =>
 
 export const createCategory = (data: { name: string; slug: string }): Promise<Category> =>
   api.post('/categories', data).then(r => r.data);
+
+export const updateProduct = (id: number, formData: FormData): Promise<Product> =>
+  api.put(`/products/${id}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }).then(r => r.data);
+
+export const deleteCategory = (id: number): Promise<void> =>
+  api.delete(`/categories/${id}`).then(r => r.data);

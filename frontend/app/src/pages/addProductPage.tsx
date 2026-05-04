@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createProduct, getCategories, createCategory } from '../api';
 import type { Category } from '../types';
 import './AddProductPage.css';
+import { createProduct, getCategories, createCategory, deleteCategory } from '../api';
 
 export default function AddProductPage() {
   const navigate = useNavigate();
@@ -115,30 +115,50 @@ export default function AddProductPage() {
               <input name="price" type="number" step="0.01" min="0" value={form.price} onChange={handleChange} required placeholder="0.00" />
             </div>
 
-            <div className="add-page__field">
-              <label>Category</label>
-              <div className="add-page__cat-row">
-                <select name="categoryId" value={form.categoryId} onChange={handleChange} title='category'>
-                  <option value="">No category</option>
-                  {categories.map(c => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
-                  ))}
-                </select>
-                <button type="button" className="add-page__cat-btn" onClick={() => setShowNewCat(v => !v)}>
-                  + New
-                </button>
-              </div>
-              {showNewCat && (
-                <div className="add-page__cat-row add-page__cat-row--spacing">
-                  <input
-                    value={newCategory}
-                    onChange={e => setNewCategory(e.target.value)}
-                    placeholder="Category name"
-                  />
-                  <button type="button" className="add-page__cat-btn" onClick={handleAddCategory}>Add</button>
-                </div>
-              )}
-            </div>
+           <div className="add-page__field add-page__field--full">
+  <label>Category</label>
+  <div className="add-page__cat-row">
+    <select title='category' name="categoryId" value={form.categoryId} onChange={handleChange}>
+      <option value="">No category</option>
+      {categories.map(c => (
+        <option key={c.id} value={c.id}>{c.name}</option>
+      ))}
+    </select>
+    <button type="button" className="add-page__cat-btn" onClick={() => setShowNewCat(v => !v)}>
+      + New
+    </button>
+  </div>
+
+  <ul className="add-page__cat-list">
+    {categories.map(c => (
+      <li key={c.id} className="add-page__cat-item">
+        <span>{c.name}</span>
+        <button
+          type="button"
+          className="add-page__cat-delete"
+          onClick={async () => {
+            if (!confirm(`Delete "${c.name}"?`)) return;
+            await deleteCategory(c.id);
+            setCategories(cats => cats.filter(cat => cat.id !== c.id));
+          }}
+        >
+          Delete
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  {showNewCat && (
+    <div className="add-page__cat-row add-page__cat-row--spacing">
+      <input
+        value={newCategory}
+        onChange={e => setNewCategory(e.target.value)}
+        placeholder="Category name"
+      />
+      <button type="button" className="add-page__cat-btn" onClick={handleAddCategory}>Add</button>
+    </div>
+  )}
+</div>
 
             <div className="add-page__field">
               <label>Availability</label>

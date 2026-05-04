@@ -4,6 +4,7 @@ import CatalogPage from './pages/catalogPage';
 import ProductPage from './pages/productPage';
 import AddProductPage from './pages/addProductPage';
 import './App.css';
+import LoginPage from './pages/loginPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<CatalogPage />} />
         <Route path="/products/:slug" element={<ProductPage />} />
         <Route path="/add" element={<AddProductPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
