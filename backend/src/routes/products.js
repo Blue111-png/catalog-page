@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const prisma = require("../lib/prisma");
 const cloudinary = require("../lib/cloudinary");
-const authMiddleware = require('../middleware/Auth');
+const authMiddleware = require('../middleware/auth');
 
 const upload = multer({ storage: multer.memoryStorage() });
 

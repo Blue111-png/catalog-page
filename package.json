@@ -4,7 +4,7 @@
   "description": "A full‑stack catalog application built with **React (frontend)**, **Express (backend)**, and **PostgreSQL (database)**.  \r Features:\r - Display products in a professional catalog layout\r - Upload new products with images\r - Manage product details dynamically",
   "main": "index.js",
  "scripts": {
-  "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend/app && npm run dev\""
+  "dev": "concurrently \"docker-compose up\" \"cd frontend/app && npm run dev\""
 },
   "repository": {
     "type": "git",
