@@ -72,3 +72,27 @@
 .header__logout:hover {
   color: #a32d2d;
 }
+
+@media (max-width: 768px) {
+  .header__inner {
+    padding: 0 20px;
+  }
+
+  .header__logo-main {
+    font-size: 20px;
+  }
+
+  .header__logo-sub {
+    font-size: 11px;
+  }
+
+  .header__nav {
+    gap: 16px;
+  }
+
+  .header__nav a,
+  .header__logout {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+}
