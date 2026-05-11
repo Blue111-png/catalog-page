@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Category } from '../types';
-import './AddProductPage.css';
+import './addProductPage.css';
 import { createProduct, getCategories, createCategory, deleteCategory } from '../api';
 
 export default function AddProductPage() {
