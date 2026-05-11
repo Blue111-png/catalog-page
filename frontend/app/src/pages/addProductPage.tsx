@@ -111,7 +111,7 @@ export default function AddProductPage() {
             </div>
 
             <div className="add-page__field">
-              <label>Price (USD) *</label>
+              <label>Price (FCFA) *</label>
               <input name="price" type="number" step="0.01" min="0" value={form.price} onChange={handleChange} required placeholder="0.00" />
             </div>
 
