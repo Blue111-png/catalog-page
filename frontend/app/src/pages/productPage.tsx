@@ -154,7 +154,7 @@ const handleWhatsApp = () => {
                 <span className="product-page__category">{product.category.name}</span>
               )}
               <h1 className="product-page__name">{product.name}</h1>
-              <p className="product-page__price">${product.price.toFixed(2)}</p>
+              <p className="product-page__price">{product.price.toFixed(2)}FCFA</p>
               <span className={`product-page__stock ${product.inStock ? 'in' : 'out'}`}>
                 {product.inStock ? 'In Stock' : 'Out of Stock'}
               </span>
