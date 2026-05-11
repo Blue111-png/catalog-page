@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getProducts, getCategories } from '../api';
 import type { Product, Category } from '../types';
 import ProductCard from '../components/productCard';
-import './CatalogPage.css';
+import './catalogPage.css';
 
 export default function CatalogPage() {
   const [products, setProducts] = useState<Product[]>([]);
