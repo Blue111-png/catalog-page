@@ -10,6 +10,8 @@ export default function CatalogPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const isLoggedIn = !!localStorage.getItem('token');
+
 
   useEffect(() => {
     getCategories().then(setCategories);
@@ -60,7 +62,7 @@ export default function CatalogPage() {
           ) : products.length === 0 ? (
             <div className="catalog__empty">
               <p>No products found.</p>
-              <Link to="/add">Add your first product →</Link>
+              { isLoggedIn && (<Link to="/add">Add your first product →</Link>)}
             </div>
           ) : (
             <div className="catalog__grid">
