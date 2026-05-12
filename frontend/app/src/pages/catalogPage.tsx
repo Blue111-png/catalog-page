@@ -3,6 +3,7 @@ import { getProducts, getCategories } from '../api';
 import type { Product, Category } from '../types';
 import ProductCard from '../components/productCard';
 import './catalogPage.css';
+import { Link } from "react-router-dom"
 
 export default function CatalogPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -59,7 +60,7 @@ export default function CatalogPage() {
           ) : products.length === 0 ? (
             <div className="catalog__empty">
               <p>No products found.</p>
-              <a href="/add">Add your first product →</a>
+              <Link to="/add">Add your first product →</Link>
             </div>
           ) : (
             <div className="catalog__grid">
