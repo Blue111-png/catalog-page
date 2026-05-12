@@ -3,7 +3,7 @@ import './header.css';
 
 export default function Header() {
   const { pathname } = useLocation();
-  {/*if (pathname === '/login') return null;*/}
+
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('token');
 
